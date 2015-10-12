@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapRentrak.Model", "WrapRentrak.Model\WrapRentrak.Model.csproj", "{222E72B2-3864-4DBD-A1E9-17C785595C8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapRentrak.Data", "WrapRentrak.Data\WrapRentrak.Data.csproj", "{B283D6C6-1E5F-4A47-A0E0-0ADA7F5150F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.Service", "Report.Service\Report.Service.csproj", "{03AEC61D-07C3-42B0-80CC-E8740F56D13E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapRentrakWeb1", "WrapRentrakWeb1\WrapRentrakWeb1.csproj", "{4750BFE8-F3C8-4127-B1A2-1F83288414CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{222E72B2-3864-4DBD-A1E9-17C785595C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222E72B2-3864-4DBD-A1E9-17C785595C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222E72B2-3864-4DBD-A1E9-17C785595C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222E72B2-3864-4DBD-A1E9-17C785595C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B283D6C6-1E5F-4A47-A0E0-0ADA7F5150F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B283D6C6-1E5F-4A47-A0E0-0ADA7F5150F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B283D6C6-1E5F-4A47-A0E0-0ADA7F5150F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B283D6C6-1E5F-4A47-A0E0-0ADA7F5150F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03AEC61D-07C3-42B0-80CC-E8740F56D13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03AEC61D-07C3-42B0-80CC-E8740F56D13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03AEC61D-07C3-42B0-80CC-E8740F56D13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03AEC61D-07C3-42B0-80CC-E8740F56D13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4750BFE8-F3C8-4127-B1A2-1F83288414CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4750BFE8-F3C8-4127-B1A2-1F83288414CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4750BFE8-F3C8-4127-B1A2-1F83288414CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4750BFE8-F3C8-4127-B1A2-1F83288414CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,11 @@
+﻿<grid id="gridContainer" headerText="Rentrak Single Market Grid Report"  horizontalScrollPolicy="on" enableHeightAutoAdjust ="true" maxAutoAdjustHeight ="900" enablePaging="false" enableFilters="true" enableFooters="false" >
+  <level>
+    <columns>
+      <column dataField="time" headerText="Time" columnLockMode="left" />
+     <column dataField="station" headerText="Series" filterControl="TextInput" filterOperation="Contains"/>
+    <column dataField="program" headerText="Episode" filterControl="TextInput" filterOperation="Contains"/>
+    <column dataField="RT" headerText="RT" filterControl="TextInput" filterOperation="Contains"/>
+    <column dataField="SH" headerText="SH" filterControl="TextInput" filterOperation="Contains"/>
+    </columns>
+  </level>
+</grid>

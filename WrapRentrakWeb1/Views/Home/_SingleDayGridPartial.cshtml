@@ -1,0 +1,35 @@
+@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "SingleDayGrid";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "SingleDayGridPartial" };
+
+		settings.KeyFieldName = "id";
+
+        //settings.SettingsPager.Visible = true;
+        //settings.SettingsPager.PageSize = 5000;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+		settings.Settings.ShowGroupPanel = true;
+		settings.Settings.ShowFilterRow = true;
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 800;
+        settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+        settings.SettingsPager.PageSize = 20;
+        settings.Columns.Add("id", "ID").FixedStyle = GridViewColumnFixedStyle.Left;
+        settings.Columns.Add("MarketName", "Market").FixedStyle = GridViewColumnFixedStyle.Left; 
+                settings.Columns.Add("qhDateTime","Time");
+                settings.Columns.Add("putHutDuring15Minutes","HT");
+                settings.Columns.Add("rentrakStationName","Station");
+                settings.Columns.Add("rentrakEpisodeTitle","Episode");
+                settings.Columns.Add("rentrakSeriesName","Series");
+                settings.Columns.Add("rentrakDemoName","Income");
+                settings.Columns.Add("ratingDuring15Minutes", "RT");
+                settings.Columns.Add("shareDuring15Minutes", "SH");
+                settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+                settings.Width = 950;
+			});
+		if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

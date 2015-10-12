@@ -1,0 +1,22 @@
+﻿@model IEnumerable<WrapRentrakWeb1.ViewModel.ReportViewModel>
+
+@{
+    ViewBag.Title = "Filter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="jumbotron">
+
+        @foreach (var item in Model)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @Html.Label(item.ReportName)
+                </div>
+                @Html.Partial("Report", item)
+            </div>
+        }
+
+    </div>
+</div>
