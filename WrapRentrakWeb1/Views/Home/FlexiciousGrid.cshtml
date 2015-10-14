@@ -26,37 +26,97 @@
     <script type="text/javascript">
         var data = [];
         $(document).ready(function () {
+            var grid;
+
             myCompanyNameSpace.onItemClick = function (evt) {
-                var grid = evt.target;
+//                var grid = evt.target;
                 alert('You clicked on ' + evt.item.id);
             }
+
+            myCompanyNameSpace.virtualScroll_eventHandler = function (evt) {
+                console.log(evt);
+                var vbd = grid.getBodyContainer();
+
+                // TODO send request to server for more records here
+                for (var i = 0; i < evt.recordsToLoad.length; i++) {
+                    var vsli = evt.recordsToLoad[i];
+                    vsli.item = myCompanyNameSpace.virtualScroll_populateObject(new Object(),
+                        vsli.item ? vsli.item.Id : vsli.parent ? vsli.parent.Id + ":" + vsli.recordIndex.toString() : vsli.recordIndex.toString(),
+                        vsli.level);
+                }
+                vbd.setVirtualScrollData(evt.recordsToLoad);
+            };
+
+            myCompanyNameSpace.virtualScroll_populateObject = function (obj, x, lvl) {
+                obj.id = x;
+                obj.MarketName = "Test Market";
+                obj.qhDateTime = "Test qhDateTime";
+                obj.putHutDuring15Minutes = "0.01";
+                obj.rentrakStationName = "Test Station";
+                obj.rentrakEpisodeTitle = "Test Episode";
+                obj.rentrakSeriesName = "Test Series";
+                obj.rentrakDemoName = "Test Demo";
+                obj.ratingDuring15Minutes = "10";
+                obj.shareDuring15Minutes = "11";
+                return obj;
+            };
+
+            myCompanyNameSpace.virtualScroll_scrollHandler = function (evt) {
+                grid.spinnerLabel = "Loading Record " + (grid.getVirtualBodyContainer().getTopLevelRecordIndex(evt.scrollTop) +
+                    grid.getVirtualBodyContainer().rows.length - 2);
+            };
+
             // initialize the model after all the events have been hooked up
             $.getJSON('/Home/SingleDayGridSlick', function (data) {
-               
-                var grid = new flexiciousNmsp.FlexDataGrid(document.getElementById("gridContainer"),
+                var configuration = '<grid id="gridContainer" ' +
+                    '     selectedKeyField="id" ' +
+                    '     headerText="Rentrak Report" ' +
+                    '     horizontalScrollPolicy="on" ' +
+                    '     enablePrint="true" ' +
+                    '     enableHeightAutoAdjust ="true" ' +
+                    '     maxAutoAdjustHeight ="900" ' +
+                    '     enablePreferencePersistence="true" ' +
+                    '     enableExport="true" ' +
+                    '     totalRecords="' + data.length + '" ' +
+                    '     enableVirtualScroll="true" ' +
+                    '     virtualScroll="myCompanyNameSpace.virtualScroll_eventHandler" ' +
+                    '     scroll="myCompanyNameSpace.virtualScroll_scrollHandler"  ' +
+                    '     showSpinnerOnFilterPageSort="true" ' +
+                    '     enablePaging="false" ' +
+                    '     enableFilters="true" ' +
+                    '     itemLoadMode="server" ' +
+                    '     filterPageSortMode="true" ' +
+                    '     numChildrenField="0" ' +
+                    '     enableFooters="false">' +
+                    '           <level>' +
+                    '                   <columns>' +
+                    '                           <column dataField="id" headerText="ID" columnLockMode="left" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="MarketName" headerText="Market" columnLockMode="left" filterControl="TextInput" filterOperation="Contains"/>' +
+                    '                           <column dataField="qhDateTime" headerText="Date" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="putHutDuring15Minutes" headerText="HT" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakStationName" headerText="Station" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakEpisodeTitle" headerText="Episode" filterControl="TextInput" filterWaterMark="Search"' +
+                    '                                                                                              enableFilterAutoComplete="true" filterOperation="Contains"/>' +
+                    '                           <column dataField="rentrakSeriesName" headerText="Series" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakDemoName" headerText="Income" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="ratingDuring15Minutes" headerText="RT" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="shareDuring15Minutes" headerText="SH" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                   </columns>' +
+                    '           </level>' +
+                    '     </grid>';
+
+                grid = new flexiciousNmsp.FlexDataGrid(document.getElementById("gridContainer"),
                    {
-                       configuration: '<grid id="gridContainer" headerText="Rentrak Report"  horizontalScrollPolicy="on" enablePrint="true"' +
-                                   ' enableHeightAutoAdjust ="true" maxAutoAdjustHeight ="900" enablePreferencePersistence="true" enableExport="true"' +
-                                   ' enablePaging="false" enableFilters="true" enableFooters="false" >' +
-                                   '                        <level>' +
-                                   '                                <columns>' +
-                                   '                                        <column dataField="id" headerText="ID" columnLockMode="left" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="MarketName" headerText="Market" columnLockMode="left" filterControl="TextInput" filterOperation="Contains"/>' +
-                                   '                                        <column dataField="qhDateTime" headerText="Date" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="putHutDuring15Minutes" headerText="HT" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="rentrakStationName" headerText="Station" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="rentrakEpisodeTitle" headerText="Episode" filterControl="TextInput" filterWaterMark="Search"' +
-   '                                                                                                                   enableFilterAutoComplete="true" filterOperation="Contains"/>' +
-                                   '                                        <column dataField="rentrakSeriesName" headerText="Series" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="rentrakDemoName" headerText="Income" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="ratingDuring15Minutes" headerText="RT" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                        <column dataField="shareDuring15Minutes" headerText="SH" filterControl="TextInput" filterOperation="Contains" />' +
-                                   '                                </columns>' +
-                                   '                        </level>' +
-                                   '                ' +
-                                   '        </grid>',
+                       configuration: configuration,
                        dataProvider: data
                    });
+
+//                var level = 1; // always 1 for Flat Grids per docs
+//                var recordIndex = 35;
+//                var verticalScrollPosition = 10;
+//                var itemHeight = 5;
+//                var recordsToLoad = new flexiciousNmsp.VirtualScrollLoadInfo(level, recordIndex, verticalScrollPosition, itemHeight, item);
+//                new flexiciousNmsp.FlexDataGridVirtualScrollEvent("virtualScroll", grid, recordsToLoad);
             });
        });
        
