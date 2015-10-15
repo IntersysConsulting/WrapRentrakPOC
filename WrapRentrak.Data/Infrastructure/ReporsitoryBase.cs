@@ -85,6 +85,14 @@ namespace WrapRentrak.Data.Infrastructure
             return data;
         }
 
+        public virtual IEnumerable<T> GetSingleMktGridReportPaging(string marketId, string stationId, string dateFrom, string dateTo, string demoId, int start, int limit)
+        {
+            //IEnumerable<T> data = (dataContext as IObjectContextAdapter).ObjectContext.ExecuteStoreQuery<T>("CALL GetSingleMktGrid_sp({0}, {1}, {2}, {3}, {4});", marketId, stationId, dateFrom,dateTo, demoId);
+            IEnumerable<T> data = (dataContext as IObjectContextAdapter).ObjectContext.ExecuteStoreQuery<T>("CALL GetSingleMktGridPaging({0}, {1}, {2}, {3}, {4}, {5}, {6});", marketId, stationId, dateFrom, dateTo, demoId, start, limit);
+                       
+            return data;
+        }
+
         public virtual IEnumerable<T> GETSMData(string marketId, string stationId, string dateFrom, string dateTo, string demoId)
         {
             //IEnumerable<T> data = (dataContext as IObjectContextAdapter).ObjectContext.ExecuteStoreQuery<T>("CALL GetSingleMktGrid_sp({0}, {1}, {2}, {3}, {4});", marketId, stationId, dateFrom,dateTo, demoId);

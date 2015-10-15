@@ -15,6 +15,7 @@ namespace WrapRentrak.Reports.Service
         IEnumerable<WrapRentrak.Model.SingleMktGridReport> GetReports();
         WrapRentrak.Model.SingleMktGridReport GetReport(int id);
         IEnumerable<WrapRentrak.Model.SingleMktGridReport> GetSingleMktGridReports(string marketId, string stationId, string dateFrom, string dateTo, string demoId);
+        IEnumerable<WrapRentrak.Model.SingleMktGridReport> GetSingleMktGridReportsPaging(string marketId, string stationId, string dateFrom, string dateTo, string demoId, int start, int limit);
         IEnumerable<WrapRentrak.Model.SingleMktGridReport> GETSMData(string marketId, string stationId, string dateFrom, string dateTo, string demoId);
     }
 
@@ -45,6 +46,12 @@ namespace WrapRentrak.Reports.Service
         public IEnumerable<WrapRentrak.Model.SingleMktGridReport> GetSingleMktGridReports(string marketId, string stationId, string dateFrom, string dateTo, string demoId)
         {
             var reports = singleMktGridRepository.GetSingleMktGridReport(marketId,stationId,dateFrom,dateTo,demoId);
+            return reports;
+        }
+
+        public IEnumerable<WrapRentrak.Model.SingleMktGridReport> GetSingleMktGridReportsPaging(string marketId, string stationId, string dateFrom, string dateTo, string demoId, int start, int limit)
+        {
+            var reports = singleMktGridRepository.GetSingleMktGridReportPaging(marketId, stationId, dateFrom, dateTo, demoId, start, limit);
             return reports;
         }
 

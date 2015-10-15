@@ -26,6 +26,7 @@ namespace WrapRentrak.Data.Infrastructure
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
         //get report using stored procedure
         IEnumerable<T> GetSingleMktGridReport(string marketId, string stationId, string dateFrom, string dateTo, string demoId);
+        IEnumerable<T> GetSingleMktGridReportPaging(string marketId, string stationId, string dateFrom, string dateTo, string demoId, int start, int limit);
         IEnumerable<T> GETSMData(string marketId, string stationId, string dateFrom, string dateTo, string demoId);
     }
 }

@@ -258,6 +258,7 @@
     <Content Include="js\slick.formatters.js" />
     <Content Include="js\slick.grid.js" />
     <Content Include="js\slick.groupitemmetadataprovider.js" />
+    <Content Include="js\my.slick.remotemodel.js" />
     <Content Include="js\slick.remotemodel.js" />
     <Content Include="js\SlickGrid.js" />
     <Content Include="plugins\slick.autotooltips.js" />
@@ -312,6 +313,8 @@
     <Content Include="Views\Home\JQGrid.cshtml" />
     <Content Include="Views\Home\FlexiciousGrid.cshtml" />
     <Content Include="Views\Home\FlexiciousSMGrid.cshtml" />
+    <Content Include="Views\Home\SlickGridRemoteData.cshtml" />
+    <Content Include="Views\Home\FlexiciousVirtualScroll.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

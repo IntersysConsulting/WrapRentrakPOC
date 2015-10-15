@@ -1,0 +1,142 @@
+﻿@model WrapRentrakWeb1.ViewModel.RentrakJqGridModel
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Simple</title>
+
+    <!--These are jquery and plugins that we use from jquery-->
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery-ui-1.9.1.custom.min.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery.maskedinput-1.3.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery.watermarkinput.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery.ui.menu.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/external/js/adapters/jquery/jquery.toaster.js"></script>
+    <!--End-->
+    <!--These are specific to htmltreegrid-->
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/minified-compiled-jquery.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/examples/js/Configuration.js"></script>
+    <script type="text/javascript" src="http://htmltreegrid.com/demo/themes.js"></script>
+    <!--End-->
+    <!--css imports-->
+    <link rel="stylesheet" href="http://htmltreegrid.com/demo/flexicious/css/flexicious.css" type="text/css" />
+    <link rel="stylesheet" href="http://htmltreegrid.com/demo/external/css/adapter/jquery/jquery-ui-1.9.1.custom.min.css" type="text/css" />
+    <!--End-->
+
+    <script type="text/javascript">
+        var data = [];
+        var url = "/Home/SingleDayGridSlickPaging?start={0}&limit={1}";
+        String.format = function () {
+            // The string containing the format items (e.g. "{0}")
+            // will and always has to be the first argument.
+            var theString = arguments[0];
+
+            // start with the second argument (i = 1)
+            for (var i = 1; i < arguments.length; i++) {
+                // "gm" = RegEx options for Global search (more than one instance)
+                // and for Multiline search
+                var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+                theString = theString.replace(regEx, arguments[i]);
+            }
+
+            return theString;
+        }
+
+        $(document).ready(function () {
+            var grid;
+
+            myCompanyNameSpace.virtualScroll_eventHandler = function (evt) {
+                //console.log(evt);
+                var vbd = grid.getBodyContainer();
+                grid.getVirtualBodyContainer().rows.length - 2;
+
+                // send request to server for more records here
+                var urlPage = String.format(url, evt.recordsToLoad[evt.recordsToLoad.length - 1].recordIndex, evt.recordsToLoad.length);
+
+                req = $.ajax({
+                    url: urlPage,
+                    dataType: 'json',
+                    success: function (response) {
+                        //set data to grid
+                        for (var i = 0; i < response.length; i++) {
+                            var vsli = evt.recordsToLoad[i];
+                            vsli.item = response[i];
+                        }
+                        vbd.setVirtualScrollData(evt.recordsToLoad);
+                    },
+                    error: function () {
+                        alert("Error loading data");
+                    }
+                });
+            };
+
+            myCompanyNameSpace.virtualScroll_scrollHandler = function (evt) {
+                var recordScrollCount = grid.getVirtualBodyContainer().getTopLevelRecordIndex(evt.scrollTop) +
+                    grid.getVirtualBodyContainer().rows.length - 2;
+                grid.spinnerLabel = "Loading Record " + recordScrollCount;
+
+            };
+
+            // initialize the model after all the events have been hooked up
+            //totalRecords -> hardcoded for now.
+            var urlInitialLoad = String.format(url, "0", "100");
+            $.getJSON(urlInitialLoad, function (data) {
+                var configuration = '<grid id="gridContainer" ' +
+                    '     selectedKeyField="id" ' +
+                    '     headerText="Rentrak Report" ' +
+                    '     horizontalScrollPolicy="on" ' +
+                    '     enablePrint="true" ' +
+                    '     enableHeightAutoAdjust ="true" ' +
+                    '     maxAutoAdjustHeight ="900" ' +
+                    '     enablePreferencePersistence="true" ' +
+                    '     enableExport="true" ' +
+                    '     totalRecords="' + 20000 + '" ' +
+                    '     enableVirtualScroll="true" ' +
+                    '     virtualScroll="myCompanyNameSpace.virtualScroll_eventHandler" ' +
+                    '     scroll="myCompanyNameSpace.virtualScroll_scrollHandler"  ' +
+                    '     showSpinnerOnFilterPageSort="false" ' +
+                    '     enablePaging="false" ' +
+                    '     enableFilters="true" ' +
+                    '     itemLoadMode="server" ' +
+                    '     filterPageSortMode="true" ' +
+                    '     numChildrenField="0" ' +
+                    '     enableFooters="false">' +
+                    '           <level>' +
+                    '                   <columns>' +
+                    '                           <column dataField="id" headerText="ID" columnLockMode="left" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="MarketName" headerText="Market" columnLockMode="left" filterControl="TextInput" filterOperation="Contains"/>' +
+                    '                           <column dataField="qhDateTime" headerText="Date" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="putHutDuring15Minutes" headerText="HT" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakStationName" headerText="Station" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakEpisodeTitle" headerText="Episode" filterControl="TextInput" filterWaterMark="Search"' +
+                    '                                                                                              enableFilterAutoComplete="true" filterOperation="Contains"/>' +
+                    '                           <column dataField="rentrakSeriesName" headerText="Series" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="rentrakDemoName" headerText="Income" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="ratingDuring15Minutes" headerText="RT" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                           <column dataField="shareDuring15Minutes" headerText="SH" filterControl="TextInput" filterOperation="Contains" />' +
+                    '                   </columns>' +
+                    '           </level>' +
+                    '     </grid>';
+
+                grid = new flexiciousNmsp.FlexDataGrid(document.getElementById("gridContainer"),
+                   {
+                       configuration: configuration,
+                       dataProvider: data
+                   });
+
+                //                var level = 1; // always 1 for Flat Grids per docs
+                //                var recordIndex = 35;
+                //                var verticalScrollPosition = 10;
+                //                var itemHeight = 5;
+                //                var recordsToLoad = new flexiciousNmsp.VirtualScrollLoadInfo(level, recordIndex, verticalScrollPosition, itemHeight, item);
+                //                new flexiciousNmsp.FlexDataGridVirtualScrollEvent("virtualScroll", grid, recordsToLoad);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div id="gridContainer" style="height: 400px;width: 100%;">
+    </div>
+</body>
+</html>

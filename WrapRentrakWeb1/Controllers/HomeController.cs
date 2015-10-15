@@ -44,6 +44,10 @@ namespace WrapRentrakWeb1.Controllers
         {
            return View();
         }
+        public ActionResult SlickGridRemoteData()
+        {
+            return View();
+        }
 
         public ActionResult Filter(string category, string reportName)
         {
@@ -97,6 +101,19 @@ namespace WrapRentrakWeb1.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             serializer.MaxJsonLength = Int32.MaxValue;
             string serializedData=serializer.Serialize(model);
+            return serializedData;
+        }
+
+        public string SingleDayGridSlickPaging(int start,int limit)
+        {
+            if (start == 0) start = 0;
+            if (limit == 0) limit = 100;
+            IEnumerable<SingleMktGridReport> singleMktGridReports;
+            singleMktGridReports = singleMktGridReportService.GetSingleMktGridReportsPaging("753", "9959", "01/01/2015", "09/30/2015", "379",start,limit);
+            var model = singleMktGridReports;
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
+            string serializedData = serializer.Serialize(model);
             return serializedData;
         }
 
@@ -270,6 +287,11 @@ namespace WrapRentrakWeb1.Controllers
         {
             return View();
 
+        }
+
+        public ActionResult FlexiciousVirtualScroll()
+        {
+           return View();
         }
     }
 }
